@@ -8,9 +8,22 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Bad Advice | GradRight B2U",
+  title: "Bad Advice",
   description:
-    "Answer 6 completely unnecessary questions and get advice you should absolutely not follow. Then get the real version from GradRight.",
+    "Get hilariously bad AI advice, then discover real course recommendations.",
+  openGraph: {
+    title: "Bad Advice",
+    description:
+      "Get hilariously bad AI advice, then discover real course recommendations.",
+    siteName: "GradRight",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Bad Advice",
+    description:
+      "Get hilariously bad AI advice, then discover real course recommendations.",
+  },
 };
 
 export default function RootLayout({

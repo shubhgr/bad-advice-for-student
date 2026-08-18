@@ -6,14 +6,28 @@ import { trackAppDownloadClick } from "@/lib/track";
 
 const FEATURES = [
   {
-    id: "recs",
-    icon: "thumb_up",
-    label: "Personalised Recommendations",
+    id: "shortlist",
+    icon: "school",
+    label: "SHORTLIST",
+    detail: "Find universities",
   },
   {
-    id: "compare",
-    icon: "travel_explore",
-    label: "Compare 500+ Global Programs",
+    id: "finance",
+    icon: "payments",
+    label: "FINANCE",
+    detail: "Explore funding options",
+  },
+  {
+    id: "learn",
+    icon: "menu_book",
+    label: "LEARN",
+    detail: "Discover courses & certifications",
+  },
+  {
+    id: "connect",
+    icon: "groups",
+    label: "CONNECT",
+    detail: "Meet like-minded students",
   },
 ] as const;
 
@@ -48,14 +62,6 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
           />
         </a>
 
-        <div className="bridge-lead">
-          <p className="bridge-lead-muted">Bad advice can be funny.</p>
-          <p className="bridge-lead-main">
-            The wrong career move{" "}
-            <span className="bridge-lead-emphasis">isn&apos;t</span>.
-          </p>
-        </div>
-
         <div className="bridge-pitch">
           <h2 className="bridge-headline">
             <span className="bridge-headline-strong">
@@ -76,6 +82,7 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
                   {feature.icon}
                 </span>
                 <span className="bridge-feature-label">{feature.label}</span>
+                <span className="bridge-feature-detail">{feature.detail}</span>
               </div>
             ))}
           </div>
@@ -83,8 +90,9 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
 
         <section className="bridge-cta-section">
           <p className="bridge-body">
-            An online degree, a certificate, a career upgrade. Find your right
-            fit with GradRight.
+            Whether you&apos;re figuring out your university, funding your
+            education, building your profile or simply trying to decide
+            what&apos;s next...
           </p>
 
           <div className="bridge-cta-block">
@@ -98,9 +106,6 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
             >
               Download the App now!
             </a>
-            <p className="bridge-cta-sub">
-              Pick from 120+ global universities
-            </p>
           </div>
         </section>
       </div>
