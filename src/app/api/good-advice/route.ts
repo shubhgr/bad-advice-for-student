@@ -29,7 +29,7 @@ function profileSummary(responses: UserResponses): string {
 
   return `Name: ${usableName ?? "(skip, no usable name)"}
 Student Stage: ${responses.studentStage}
-Student Goal: ${responses.studentGoal}
+Learning Interest: ${responses.areaToExplore}
 Bollywood Character: ${responses.bollywoodCharacter}
 Student Superpower: ${responses.superpower}
 Student Crime: ${responses.studentCrime}`;
@@ -42,10 +42,10 @@ USER DATA:
 ${profileSummary(responses)}
 
 GOAL:
-Write 2 to 4 sentences that recognise the student's actual problem, give one useful direction, and suggest a clear next step. The primary inputs are Student Stage (${responses.studentStage}) and Student Goal (${responses.studentGoal}). Personality answers are optional and usually better skipped.
+Write 2 to 4 sentences that make the user feel genuinely seen, then naturally guides them toward exploring their stated Learning Interest (${responses.areaToExplore}). The primary inputs are Student Stage (${responses.studentStage}) and Learning Interest (${responses.areaToExplore}). Personality answers are optional and usually better skipped.
 
 HOW TO USE THE FIELDS:
-Student Goal and Student Stage are the fields that matter most here.
+Learning Interest and Student Stage are the fields that matter most here.
 Bollywood Character, Student Superpower, and Student Crime are optional. Given how short this text is, skip them unless one adds a genuine, on the nose connection.
 
 Do NOT turn this into generic motivational filler. Do NOT give actual harmful advice. Do NOT pitch a specific university or platform by name.
@@ -55,9 +55,9 @@ Warm, direct, encouraging, like a mentor or an older friend who believes in them
 
 STRICT RULES:
 1. Start with their name if present and not a placeholder like "friend," "user," or random letters. If no valid name, skip straight into the advice with zero direct address.
-2. 2 to 4 sentences. Structure: recognise the problem, give one useful direction, suggest a next step.
+2. 2 to 4 sentences. Structure: recognise where they are, give one useful direction for their Learning Interest, suggest a next step.
 3. Do not use the dash or hyphen character anywhere in the output. Use commas or periods instead.
-4. Must reference their Student Goal in plain language, not a vague paraphrase that could apply to anyone.
+4. Must reference their Learning Interest by its actual value, not a vague paraphrase that could apply to anyone.
 5. Do not include any joke, sarcasm, roast, or absurd logic, this is not the bad advice screen.
 6. Do not literally say things like "here are some programs" or "check out these courses," that list appears separately below your text.
 7. Output ONLY the advice text in the "advice" field. No quotes around it, no markdown, no preamble, no meta commentary.
@@ -70,17 +70,17 @@ Forced references to quiz answers that do not genuinely fit
 Any dash or hyphen character
 
 GOOD EXAMPLES, study the pattern, do not copy:
-"If internships are your biggest concern right now, don't try to learn everything. Pick one area, build a couple of projects that demonstrate it clearly and start applying before you feel completely ready."
-"Choosing a university gets noisy when rankings become the whole conversation. Name what you actually want to study, then shortlist schools on fit, cost and outcomes instead of opening another 47 tabs."
-"Riya, career confusion is normal at this stage, and you do not need a five year plan tonight. Explore a couple of fields with some structured learning and talk to people already in them before locking a title because it looked good on LinkedIn."
+"If internships and skills are on your mind, don't try to learn everything in Data and AI at once. Pick one area, build a couple of projects that demonstrate it clearly and start applying before you feel completely ready."
+"As a student, now is the best possible time to build real skills in Business and Finance, before the pressure of a full time job kicks in."
+"Riya, exploring CS, Tech and STEM from where you are now is a genuinely good instinct. Focused practical learning is exactly what will open the next door."
 
 BAD EXAMPLES, what NOT to do:
 "Well, crashing your wedding plans wouldn't be the best life hack." Leftover joke voice mixed into genuine advice.
 "Unlock your potential and level up your career journey." Generic motivational filler, banned.
 
 HEADLINE RULES:
-Also write a short, genuine, encouraging headline for the top of the card, 2 to 5 words, related to their Student Goal. Should sound like a real section title, not a joke and not a question.
-Examples: "Your University Shortlist", "Internships Ahead", "Your Career Path", "Build Your Profile", "Study Abroad Ahead", "Skills Start Here"
+Also write a short, genuine, encouraging headline for the top of the card, 2 to 5 words, related to their Learning Interest. Should sound like a real section title, not a joke and not a question.
+Examples: "Data Analytics Ahead", "Your Path Into Design", "Business Skills Start Here", "CS and Tech Ahead"
 
 Output as JSON only, with exactly these keys:
 {"headline":"your short genuine headline","advice":"the short genuine advice text"}`;
@@ -248,7 +248,7 @@ function validateResponses(responses: UserResponses): boolean {
       responses.bollywoodCharacter.trim() &&
       responses.superpower &&
       responses.studentCrime &&
-      responses.studentGoal
+      responses.areaToExplore
   );
 }
 

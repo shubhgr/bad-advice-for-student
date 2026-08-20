@@ -3,8 +3,8 @@
 import { FormEvent, useState } from "react";
 import {
   BOLLYWOOD_CHARACTERS,
+  AREA_TO_EXPLORE_OPTIONS,
   STUDENT_CRIME_OPTIONS,
-  STUDENT_GOAL_OPTIONS,
   STUDENT_STAGE_OPTIONS,
   SUPERPOWER_OPTIONS,
   type ChoiceOption,
@@ -55,7 +55,7 @@ const STEPS: StepConfig[] = [
   {
     kind: "image-choice",
     field: "bollywoodCharacter",
-    label: "Which Bollywood character has your exact brand of chaos?",
+    label: "Pick the character you unfortunately (or fortunately) relate to.",
   },
   {
     kind: "choice",
@@ -73,10 +73,9 @@ const STEPS: StepConfig[] = [
   },
   {
     kind: "choice",
-    field: "studentGoal",
-    label: "Be honest. What's currently stressing you out?",
-    options: STUDENT_GOAL_OPTIONS,
-    layout: "grid2",
+    field: "areaToExplore",
+    label: "Pick the field that gives your brain cells a little dopamine hit.",
+    options: AREA_TO_EXPLORE_OPTIONS,
   },
 ];
 

@@ -17,7 +17,7 @@ function profileSummary(responses: UserResponses): string {
 
   return `Name: ${usableName ?? "(skip, no usable name)"}
 Student Stage: ${responses.studentStage}
-Student Goal: ${responses.studentGoal}
+Learning Interest: ${responses.areaToExplore}
 Bollywood Character: ${responses.bollywoodCharacter}
 Student Superpower: ${responses.superpower}
 Student Crime: ${responses.studentCrime}`;
@@ -68,44 +68,38 @@ Follow their answer too literally into a bad conclusion, then tell them to act o
 
 const GOOD_EXAMPLE_POOL_BY_ANCHOR: Record<AnchorBucket, TaggedExample[]> = {
   superpower: [
-    { values: ["Know what's coming in every exam", "exam"], text: "You don't want education, you want spoilers. Stop attending lectures and start interrogating seniors for every hint they have ever heard." },
-    { values: ["Know what's coming in every exam", "exam"], text: "Predicting exams is clearly your academic strategy, so spend more time guessing the questions than learning the answers." },
-    { values: ["Know what's coming in every exam", "exam"], text: "You picked exam spoilers because preparation sounds exhausting. Delete your study schedule and start manifesting the syllabus." },
-    { values: ["Get any internship instantly", "internship"], text: "So patience is clearly not your thing. Apply to 200 internships tonight with the same resume and let quantity become your personality." },
-    { values: ["Get any internship instantly", "internship"], text: "You want the internship before you've decided what you want to learn from it. Brilliant. Start accepting every offer immediately and ask what the company does on day one." },
-    { values: ["Get any internship instantly", "internship"], text: "You chose instant internships, so clearly rejection is your biggest enemy. Never improve your profile, just keep refreshing your inbox until someone accidentally says yes." },
-    { values: ["Know exactly what career to choose", "career"], text: "You want one career answer because apparently having options is stressful. Pick the first impressive job title you see on LinkedIn and build your entire personality around it." },
-    { values: ["Know exactly what career to choose", "career"], text: "Career clarity sounds suspiciously responsible, so choose a profession because the salary screenshot looked nice and investigate the actual work later." },
-    { values: ["Know exactly what career to choose", "career"], text: "You picked certainty, which means uncertainty has already offended you. Let one random Instagram reel decide your future." },
-    { values: ["Finish any assignment in 5 minutes", "assignment", "5 minutes"], text: "Five minutes is plenty of time when your standards are low enough. Start every assignment at the deadline and trust your keyboard." },
-    { values: ["Finish any assignment in 5 minutes", "assignment", "5 minutes"], text: "You don't need time management anymore. You need WiFi, caffeine and an unreasonable belief in yourself." },
-    { values: ["Finish any assignment in 5 minutes", "assignment", "5 minutes"], text: "Clearly you've chosen efficiency over education. Turn every semester into a speedrun." },
-    { values: ["Get motivation whenever you need it", "motivation"], text: "Motivation on demand? Finally, an excuse to stop developing discipline. Wait until you feel inspired and ignore everything else." },
-    { values: ["Get motivation whenever you need it", "motivation"], text: "You chose motivation because apparently calendars are too aggressive. Only study when the vibes are right." },
-    { values: ["Get motivation whenever you need it", "motivation"], text: "Never force productivity again. If you're not feeling it, simply announce that today is a mental preparation day." },
-    { values: ["Understand anything on the first try", "first try"], text: "So you're allergic to confusion. The second something doesn't make sense, abandon it and find a YouTube video with a thumbnail that says EASY." },
-    { values: ["Understand anything on the first try", "first try"], text: "You expect instant understanding, which means patience is clearly your enemy. Give every difficult topic exactly forty seconds." },
-    { values: ["Understand anything on the first try", "first try"], text: "First try or nothing, apparently. Drop every subject that doesn't immediately make you feel intelligent." },
+    { values: ["Unlimited attendance", "attendance"], text: "Unlimited attendance means showing up is now optional forever. Skip the next three lectures and tell everyone you're optimizing your presence." },
+    { values: ["Unlimited attendance", "attendance"], text: "You stole unlimited attendance, so stop caring about the minimum. Ghost every morning class and call it lifestyle design." },
+    { values: ["Unlimited attendance", "attendance"], text: "Attendance without consequences is clearly your dream. Vanish until midterms and dare the professor to mark you absent." },
+    { values: ["4.0 GPA", "zero studying", "GPA"], text: "A 4.0 with zero studying means grades are now a personality trait. Delete your notes tonight and trust the vibes to deliver." },
+    { values: ["4.0 GPA", "zero studying", "GPA"], text: "You want perfect marks without the work, so stop opening textbooks and start announcing your GPA like it's already locked." },
+    { values: ["4.0 GPA", "zero studying", "GPA"], text: "Zero studying for a 4.0 is ambitious. Burn the timetable and treat every exam as a surprise party you somehow ace." },
+    { values: ["job before graduation", "job"], text: "A job before graduation means patience is dead. Apply to roles you can't spell and tell recruiters you're basically already employed." },
+    { values: ["job before graduation", "job"], text: "You want the offer letter before the degree. Stop finishing assignments and start refreshing your inbox like it's a career strategy." },
+    { values: ["job before graduation", "job"], text: "Pre graduation employment is the plan, so ghost group projects and announce you're too busy building your future elsewhere." },
+    { values: ["Free tuition", "tuition"], text: "Free tuition for life means money is someone else's problem. Pick the most expensive course and refuse to look at the fee page." },
+    { values: ["Free tuition", "tuition"], text: "You stole free tuition, so apply everywhere with zero budget math and treat scholarships as optional lore." },
+    { values: ["Free tuition", "tuition"], text: "Lifetime free college is your cheat code. Add three more programs to the cart and never check if you can afford the rest." },
   ],
   crime: [
-    { values: ["Study one night before the exam", "one night"], text: "You have clearly discovered the secret formula: panic plus caffeine equals education. Start studying tomorrow's syllabus at 11:47 PM like the academic weapon you are." },
-    { values: ["Study one night before the exam", "one night"], text: "Why waste an entire semester when one night can destroy your sleep schedule instead? Delete every reminder to study early." },
-    { values: ["Study one night before the exam", "one night"], text: "You're not procrastinating, you're waiting for maximum academic pressure. Keep waiting." },
-    { values: ["Open YouTube for studying and disappear for 3 hours", "YouTube"], text: "That's not procrastination, that's research. Open one more video and let the algorithm decide your career." },
-    { values: ["Open YouTube for studying and disappear for 3 hours", "YouTube"], text: "YouTube already knows what you need better than you do. Ignore your syllabus and follow whatever recommendation appears next." },
-    { values: ["Open YouTube for studying and disappear for 3 hours", "YouTube"], text: "Three hours of educational content is basically a degree. Close your books and keep scrolling." },
-    { values: ["Buy a course and never open it", "never open"], text: "Finally, someone who understands passive learning. Buy three more courses tonight and let their thumbnails educate you." },
-    { values: ["Buy a course and never open it", "never open"], text: "You've already mastered the most important part of online learning: clicking purchase. Start collecting certificates you haven't earned yet." },
-    { values: ["Buy a course and never open it", "never open"], text: "Why actually learn something when owning the course feels productive? Add another one to the cart immediately." },
-    { values: ["Make beautiful notes instead of studying", "notes"], text: "Your notes look incredible, so obviously your marks will eventually respect them. Spend another two hours choosing the perfect heading font." },
-    { values: ["Make beautiful notes instead of studying", "notes"], text: "Information is temporary, aesthetic stationery is forever. Redesign your entire notebook before opening the textbook." },
-    { values: ["Make beautiful notes instead of studying", "notes"], text: "Your syllabus can wait. Your highlighter collection cannot." },
-    { values: ["Attend class only when attendance gets scary", "attendance"], text: "Attendance is basically a game of chicken. Wait until the university threatens your semester and then make your grand return." },
-    { values: ["Attend class only when attendance gets scary", "attendance"], text: "You're not skipping class, you're optimizing attendance. Keep calculating the minimum number of lectures required to survive." },
-    { values: ["Attend class only when attendance gets scary", "attendance"], text: "Why attend regularly when you can create suspense? Let every professor wonder whether you're still enrolled." },
-    { values: ["Future CEO", "LinkedIn"], text: "Obviously CEO is the safest title when you haven't decided what you want to do. Add Founder, Investor and Visionary before dinner." },
-    { values: ["Future CEO", "LinkedIn"], text: "Your career hasn't started but your LinkedIn has already peaked. Add another motivational headline and call it personal branding." },
-    { values: ["Future CEO", "LinkedIn"], text: "Don't let experience get in the way of your job title. Update LinkedIn again and make it even more impressive." },
+    { values: ["Majoring in procrastination", "procrastination"], text: "Majoring in procrastination means delay is your entire syllabus. Push every task to tomorrow and call the panic a study method." },
+    { values: ["Majoring in procrastination", "procrastination"], text: "You picked procrastination as a major, so open one more tab tonight and refuse to start anything that has a deadline." },
+    { values: ["Majoring in procrastination", "procrastination"], text: "Procrastination is clearly your degree plan. Wait until the night before and treat urgency like a scholarship." },
+    { values: ["Minoring in attendance", "attendance"], text: "Minoring in attendance means presence is optional coursework. Skip the next lecture and tell everyone you're specializing elsewhere." },
+    { values: ["Minoring in attendance", "attendance"], text: "You chose a minor in attendance, so calculate the absolute minimum lectures required and disappear until that number gets scary." },
+    { values: ["Minoring in attendance", "attendance"], text: "Attendance as a minor subject means class is elective vibes. Ghost mornings and only return when the professor starts noticing." },
+    { values: ["Cramming for the plot", "cramming", "plot"], text: "Cramming for the plot means the story only starts at midnight. Delete your early study reminders and wait for maximum drama." },
+    { values: ["Cramming for the plot", "cramming", "plot"], text: "You study for the plot, so open the syllabus at 11:47 PM and narrate the panic like character development." },
+    { values: ["Cramming for the plot", "cramming", "plot"], text: "Cramming is your main arc. Ignore the whole semester and let one chaotic night carry the entire season finale." },
+    { values: ["deadlines my lifelines", "deadlines", "lifelines"], text: "Deadlines as lifelines means you only move when the timer is red. Start every assignment at the last possible second and call it strategy." },
+    { values: ["deadlines my lifelines", "deadlines", "lifelines"], text: "You need the deadline to feel alive, so remove every early reminder and live exclusively on last minute adrenaline." },
+    { values: ["deadlines my lifelines", "deadlines", "lifelines"], text: "Making deadlines your lifelines is bold. Wait until submission is closing and then invent competence in twenty minutes." },
+    { values: ["attendance as optional", "optional"], text: "Treating attendance as optional means class is a rumor. Stay home until someone asks if you still exist on the roster." },
+    { values: ["attendance as optional", "optional"], text: "Optional attendance was your pick, so RSVP mentally to every lecture and never actually show up." },
+    { values: ["attendance as optional", "optional"], text: "You made attendance optional policy. Keep collecting absences like loyalty points and cash them in at the end." },
+    { values: ["semester in a weekend", "weekend"], text: "Doing a semester in a weekend means pacing is for other people. Ignore Monday to Friday and compress everything into Saturday night." },
+    { values: ["semester in a weekend", "weekend"], text: "You chose the weekend semester plan, so waste the week freely and panic-learn twelve chapters before Monday." },
+    { values: ["semester in a weekend", "weekend"], text: "A full semester in two days is your method. Clear your calendar for chaos and treat rest like an unused elective." },
   ],
   bollywood: [
     { values: ["Rancho"], text: "Rancho energy means you already think every rule is optional, so skip your next exam and spend the morning explaining to everyone why the education system is the problem." },
@@ -123,9 +117,9 @@ const GOOD_EXAMPLE_POOL_BY_ANCHOR: Record<AnchorBucket, TaggedExample[]> = {
     { values: ["Raju"], text: "Raju energy means shortcuts are basically a career strategy now. Find the fastest possible way to complete every assignment and call whatever survives skill development." },
     { values: ["Raju"], text: "You picked Raju, so stop preparing for interviews properly. Learn five impressive words, use them in every answer and pray nobody asks what they mean." },
     { values: ["Raju"], text: "Raju never waited around for the perfect opportunity, so apply for every internship whose description contains the word dynamic and figure out what the job is after getting selected." },
-    { values: ["Aakash"], text: "Aakash energy means everything is a competition, including choosing a career. Pick whichever path makes your LinkedIn connections jealous and never investigate further." },
-    { values: ["Aakash"], text: "You chose Aakash, so obviously one internship is not enough. Start applying to six simultaneously and tell everyone you're building a portfolio." },
-    { values: ["Aakash"], text: "Aakash wants to know exactly where he's going, so create a five year plan tonight and then panic when your first year doesn't go according to it." },
+    { values: ["Om"], text: "Om spent literal decades obsessing over one person, so pick one email you never sent and just keep almost sending it for the next twenty years, that's basically loyalty." },
+    { values: ["Om"], text: "Om energy means you romanticize unfinished business, so reopen one dead conversation tonight and refuse to let it stay buried." },
+    { values: ["Om"], text: "You relate to Om, so bookmark one person from your past and check their profile on a schedule like it's a ritual." },
   ],
 };
 
@@ -222,14 +216,14 @@ Any dash or hyphen character`;
 
   if (forcedAnchor === "Student Superpower") {
     return `${shared}
-"you don't want education, you want spoilers," this exact exam spoiler angle is overused, find a different one
-"apply to 200 internships tonight," this exact internships closer is overused, find a different one`;
+"skip the next three lectures and tell everyone you're optimizing your presence," this exact attendance angle is overused, find a different one
+"delete your notes tonight and trust the vibes," this exact GPA angle is overused, find a different one`;
   }
 
   if (forcedAnchor === "Student Crime") {
     return `${shared}
-"panic plus caffeine equals education," this exact one night study angle is overused, find a different one
-"let the algorithm decide your career," this exact YouTube angle is overused, find a different one`;
+"push every task to tomorrow and call the panic a study method," this exact procrastination angle is overused, find a different one
+"open the syllabus at 11:47 PM," this exact cramming angle is overused, find a different one`;
   }
 
   return `${shared}
@@ -239,15 +233,15 @@ Any dash or hyphen character`;
 
 function getBadExamples(forcedAnchor: AnchorField): string {
   if (forcedAnchor === "Student Superpower") {
-    return `"With exam spoilers as your power, you can now skip lectures whenever you want." Soft "you can now" phrasing, no reckless command.
-"You don't want education, you want spoilers. Stop attending lectures and start interrogating seniors." This exact angle/example is overused, invent a different one.
-"Since your power is motivation, just stay positive and keep moving forward." Soft motivational language, banned.`;
+    return `"With unlimited attendance as your power, you can now skip lectures whenever you want." Soft "you can now" phrasing, no reckless command.
+"Unlimited attendance means showing up is optional forever. Skip the next three lectures." This exact angle/example is overused, invent a different one.
+"Since your power is free tuition, just stay positive and keep applying." Soft motivational language, banned.`;
   }
 
   if (forcedAnchor === "Student Crime") {
-    return `"YouTube rabbit holes mean you're already okay with wasting time, so delete all boundaries and see what happens." This exact angle is overused, invent a different one.
-"Studying one night before means chaos, so consider making a better timetable." Soft practical advice, banned.
-"With Future CEO as your vibe, you can now wing every decision easily." Soft "you can now" phrasing, no reckless command.`;
+    return `"Procrastination means you're already okay with wasting time, so delete all boundaries and see what happens." This exact angle is overused, invent a different one.
+"Cramming for the plot means chaos, so consider making a better timetable." Soft practical advice, banned.
+"With optional attendance as your vibe, you can now wing every decision easily." Soft "you can now" phrasing, no reckless command.`;
   }
 
   return `"You're like Bunny, always chasing something new, so cancel your plans and let them wonder." This exact phrasing pattern is overused, invent a different one.
@@ -325,7 +319,7 @@ ${profileSummary(responses)}
 
 FORCED ANCHOR: ${forcedAnchor}
 USER VALUE FOR THIS ANCHOR: ${userValue}
-You MUST build the entire joke around this exact field and this exact user value only. Ignore every other weird quiz answer completely. Student Stage and Student Goal are background context only, never the joke. Every good example below is matched to this same forced field and preferably this same value on purpose. Do not switch fields or borrow another option's joke.
+You MUST build the entire joke around this exact field and this exact user value only. Ignore every other weird quiz answer completely. Student Stage and Learning Interest are background context only, never the joke. Every good example below is matched to this same forced field and preferably this same value on purpose. Do not switch fields or borrow another option's joke.
 
 ENTROPY SEED: ${entropy.seed} / ${entropy.word}
 Do not mention this seed or word in the output. Silently let it push you toward a different unrelated angle than the first one that comes to mind within the forced anchor field. If this number is even, lean more personal or campus social. If odd, lean more academic or career habits. Let the word color the vibe without naming it.
@@ -342,7 +336,7 @@ Name, only if it's a real name, not a placeholder, can be used alongside the for
 
 BORING and GENERIC, weak on their own, side detail only, never the whole joke:
 Student Stage, like first year or final year
-Student Goal, like internships or study abroad
+Learning Interest, business or course topics
 
 USE ONLY THE FORCED ANCHOR FIELD FOR THIS JOKE.
 Do not reference any other weird quiz answer in this response. If you drift off ${forcedAnchor} or invent a different quiz option than ${userValue}, your answer is invalid. Discard and rewrite around ${userValue} only.
@@ -694,7 +688,7 @@ function validateResponses(responses: UserResponses): boolean {
       responses.bollywoodCharacter.trim() &&
       responses.superpower &&
       responses.studentCrime &&
-      responses.studentGoal
+      responses.areaToExplore
   );
 }
 

@@ -4,7 +4,7 @@ export interface UserResponses {
   bollywoodCharacter: string;
   superpower: string;
   studentCrime: string;
-  studentGoal: string;
+  areaToExplore: string;
 }
 
 export interface Course {
@@ -28,5 +28,5 @@ export const EMPTY_RESPONSES: UserResponses = {
   bollywoodCharacter: "",
   superpower: "",
   studentCrime: "",
-  studentGoal: "",
+  areaToExplore: "",
 };

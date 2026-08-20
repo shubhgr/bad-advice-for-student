@@ -7,16 +7,28 @@ export interface BollywoodCharacter {
 
 export const BOLLYWOOD_CHARACTERS: BollywoodCharacter[] = [
   {
+    id: "raju",
+    name: "Raju",
+    personalityTrait: "Funny, chaotic & always scheming",
+    image: "/images/characters/raju.png?v=2",
+  },
+  {
+    id: "queen",
+    name: "Rani",
+    personalityTrait: "Innocent, Overthinker, Occasional Crier",
+    image: "/images/characters/queen.png?v=2",
+  },
+  {
     id: "rancho",
     name: "Rancho",
     personalityTrait: "Wise, Kind, Curious",
     image: "/images/characters/rancho.png?v=2",
   },
   {
-    id: "aakash",
-    name: "Aakash",
-    personalityTrait: "Ambitious, competitive",
-    image: "/images/characters/aakash.png?v=2",
+    id: "om",
+    name: "Om",
+    personalityTrait: "Dramatic, Loyal, Romantic",
+    image: "/images/characters/om.png?v=2",
   },
   {
     id: "bunny",
@@ -29,18 +41,6 @@ export const BOLLYWOOD_CHARACTERS: BollywoodCharacter[] = [
     name: "Geet",
     personalityTrait: "Witty & Unapologetically Herself",
     image: "/images/characters/geet.png?v=2",
-  },
-  {
-    id: "queen",
-    name: "Rani",
-    personalityTrait: "Innocent, Overthinker, Occasional Crier",
-    image: "/images/characters/queen.png?v=2",
-  },
-  {
-    id: "raju",
-    name: "Raju",
-    personalityTrait: "Funny, chaotic & always scheming",
-    image: "/images/characters/raju.png?v=2",
   },
 ];
 
@@ -79,82 +79,47 @@ export const STUDENT_STAGE_OPTIONS: ChoiceOption[] = [
 
 export const SUPERPOWER_OPTIONS: ChoiceOption[] = [
   {
-    value: "Know what's coming in every exam",
-    title: "Know every exam",
+    value: "Unlimited attendance. 😭",
+    title: "Unlimited attendance. 😭",
   },
   {
-    value: "Get any internship instantly",
-    title: "Instant internship",
+    value: "4.0 GPA, zero studying.",
+    title: "4.0 GPA, zero studying.",
   },
   {
-    value: "Know exactly what career to choose",
-    title: "Know my career",
+    value: "A job before graduation. 💀",
+    title: "A job before graduation. 💀",
   },
   {
-    value: "Finish any assignment in 5 minutes",
-    title: "5-minute assignments",
-  },
-  {
-    value: "Get motivation whenever you need it",
-    title: "Motivation on demand",
-  },
-  {
-    value: "Understand anything on the first try",
-    title: "Understand first try",
+    value: "Free tuition for life.",
+    title: "Free tuition for life.",
   },
 ];
 
 export const STUDENT_CRIME_OPTIONS: ChoiceOption[] = [
   {
-    value: "Study one night before the exam",
-    title: "Study one night before",
+    value: "Majoring in procrastination.",
+    title: "Majoring in procrastination.",
   },
   {
-    value: "Open YouTube for studying and disappear for 3 hours",
-    title: "YouTube for 3 hours",
+    value: "Minoring in attendance.",
+    title: "Minoring in attendance.",
   },
   {
-    value: "Buy a course and never open it",
-    title: "Buy a course, never open",
+    value: "Cramming for the plot.",
+    title: "Cramming for the plot.",
   },
   {
-    value: "Make beautiful notes instead of studying",
-    title: "Pretty notes, no studying",
+    value: "Making deadlines my lifelines.",
+    title: "Making deadlines my lifelines.",
   },
   {
-    value: "Attend class only when attendance gets scary",
-    title: "Class only for attendance",
+    value: "Treating attendance as optional.",
+    title: "Treating attendance as optional.",
   },
   {
-    value: 'Put "Future CEO" on LinkedIn in first year',
-    title: "Future CEO on LinkedIn",
-  },
-];
-
-export const STUDENT_GOAL_OPTIONS: ChoiceOption[] = [
-  {
-    value: "Which college/university should I choose?",
-    title: "College / university",
-  },
-  {
-    value: "How do I get a good internship?",
-    title: "Get a good internship",
-  },
-  {
-    value: "What career should I actually choose?",
-    title: "Choose a career",
-  },
-  {
-    value: "How do I build a better profile?",
-    title: "Build a better profile",
-  },
-  {
-    value: "Should I study abroad?",
-    title: "Study abroad",
-  },
-  {
-    value: "What skills should I learn?",
-    title: "Skills to learn",
+    value: "Doing a semester in a weekend.",
+    title: "Doing a semester in a weekend.",
   },
 ];
 
@@ -164,7 +129,7 @@ export const AREA_TO_EXPLORE_OPTIONS = [
   "CS, Tech & STEM",
   "Data & AI",
   "Healthcare & Medicine",
-  "Education & Arts",
+  "Literature and Arts",
 ];
 
 export const AREA_TO_AOS_MAP: Record<string, string[]> = {
@@ -184,7 +149,7 @@ export const AREA_TO_AOS_MAP: Record<string, string[]> = {
   "CS, Tech & STEM": ["STEM", "Technology & IT", "Computer Science"],
   "Data & AI": ["AI & Machine Learning", "Data & Analytics", "Data Science"],
   "Healthcare & Medicine": ["Healthcare & Medicine", "Healthcare"],
-  "Education & Arts": [
+  "Literature and Arts": [
     "Social Sciences & Humanities",
     "Arts & Design",
     "Design & Creative",
@@ -196,15 +161,3 @@ export const AREA_TO_AOS_MAP: Record<string, string[]> = {
   ],
 };
 
-export const STUDENT_GOAL_TO_PROGRAM_AREA: Record<string, string> = {
-  "Which college/university should I choose?": "Business & Finance",
-  "How do I get a good internship?": "CS, Tech & STEM",
-  "What career should I actually choose?": "Data & AI",
-  "How do I build a better profile?": "CS, Tech & STEM",
-  "Should I study abroad?": "Business & Finance",
-  "What skills should I learn?": "Data & AI",
-};
-
-export function getProgramAreaForGoal(studentGoal: string): string {
-  return STUDENT_GOAL_TO_PROGRAM_AREA[studentGoal] ?? "Data & AI";
-}

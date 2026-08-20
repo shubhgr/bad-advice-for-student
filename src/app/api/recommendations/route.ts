@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProgramAreaForGoal } from "@/data/questionnaire";
 import { getProgramsForArea } from "@/lib/online-programs";
 import { UserResponses } from "@/lib/types";
 
@@ -7,16 +6,14 @@ export async function POST(request: NextRequest) {
   try {
     const responses: UserResponses = await request.json();
 
-    if (!responses.studentGoal?.trim()) {
+    if (!responses.areaToExplore?.trim()) {
       return NextResponse.json(
-        { error: "Please select what is stressing you out" },
+        { error: "Please select an area to explore" },
         { status: 400 }
       );
     }
 
-    const recommendations = getProgramsForArea(
-      getProgramAreaForGoal(responses.studentGoal)
-    );
+    const recommendations = getProgramsForArea(responses.areaToExplore);
 
     return NextResponse.json({ recommendations });
   } catch (error) {
