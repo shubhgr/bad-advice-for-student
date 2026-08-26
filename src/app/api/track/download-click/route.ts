@@ -36,16 +36,27 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const utmSource = body.utm_source?.trim() || "";
+    const utmMedium = body.utm_medium?.trim() || "";
+    const utmCampaign = body.utm_campaign?.trim() || "";
+    const utmTerm = body.utm_term?.trim() || "";
+    const utmContent = body.utm_content?.trim() || "";
+    const hasAnyUtm = Boolean(
+      utmSource || utmMedium || utmCampaign || utmTerm || utmContent,
+    );
+    // Direct visits: mark clearly in the sheet without changing the download URL
+    const noUtmLabel = "no_utm";
+
     await appendDownloadClickRow({
       timestamp: new Date().toISOString(),
       page: body.location?.trim() || "bridge",
       button: body.button?.trim() || "Download the App now!",
       name: body.name?.trim() || "",
-      utmSource: body.utm_source?.trim() || "",
-      utmMedium: body.utm_medium?.trim() || "",
-      utmCampaign: body.utm_campaign?.trim() || "",
-      utmTerm: body.utm_term?.trim() || "",
-      utmContent: body.utm_content?.trim() || "",
+      utmSource: hasAnyUtm ? utmSource : noUtmLabel,
+      utmMedium: hasAnyUtm ? utmMedium : noUtmLabel,
+      utmCampaign: hasAnyUtm ? utmCampaign : noUtmLabel,
+      utmTerm: hasAnyUtm ? utmTerm : "",
+      utmContent: hasAnyUtm ? utmContent : "",
       downloadUrl: body.href?.trim() || "",
       userAgent: request.headers.get("user-agent") || "",
       referrer: body.referrer?.trim() || request.headers.get("referer") || "",

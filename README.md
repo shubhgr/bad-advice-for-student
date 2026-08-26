@@ -63,4 +63,4 @@ npm start
 
 - Advice API routes are dynamic (`force-dynamic`) so per-request randomness is not cached.  
 - Bad advice pins one fun quiz field (Bollywood / student superpower / student crime) per generation. Student stage and student goal stay background context.  
-- Default download UTMs: `utm_medium=Bad_Advice_B2U`, `utm_campaign=Bad_Advice_2026_B2U`. Campus activations can override with `utm_source=QR_[COLLEGE]`.
+- Download link is `https://link.gradright.com/` with no default UTMs. UTMs from the landing URL (e.g. campus `utm_source=QR_[COLLEGE]`) are forwarded when present.

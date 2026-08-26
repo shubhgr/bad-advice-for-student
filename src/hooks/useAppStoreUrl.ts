@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
-  DEFAULT_APP_STORE_TRACKING,
+  APP_STORE_BASE_URL,
   getAppStoreUrl,
   getTrackingParams,
 } from "@/lib/utm";
@@ -10,9 +10,10 @@ import {
 /**
  * App download URL that carries UTMs from the GradRight landing URL
  * (via iframe query string) for the whole session.
+ * Direct visits with no UTMs use the bare link.
  */
 export function useAppStoreUrl(): string {
-  const [url, setUrl] = useState(() => getAppStoreUrl(DEFAULT_APP_STORE_TRACKING));
+  const [url, setUrl] = useState(APP_STORE_BASE_URL);
 
   useEffect(() => {
     setUrl(getAppStoreUrl(getTrackingParams()));

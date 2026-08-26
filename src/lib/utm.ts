@@ -13,13 +13,6 @@ export type TrackingParams = Partial<
   Record<(typeof TRACKING_KEYS)[number], string>
 >;
 
-/** Fallback when the page is opened with no UTMs (direct / no WordPress pass-through) */
-export const DEFAULT_APP_STORE_TRACKING: TrackingParams = {
-  utm_source: "LP",
-  utm_medium: "Bad_Advice_B2U",
-  utm_campaign: "Bad_Advice_2026_B2U",
-};
-
 export const APP_STORE_BASE_URL = "https://link.gradright.com/";
 
 function pickTrackingParams(source: URLSearchParams): TrackingParams {
@@ -68,13 +61,9 @@ export function captureTrackingFromLocation(
   return readStoredTracking();
 }
 
-/** Resolved tracking: URL/session only — no extra defaults like `c`. */
+/** Resolved tracking from URL/session only — no defaults for direct visits. */
 export function getTrackingParams(): TrackingParams {
-  const captured = captureTrackingFromLocation();
-  if (Object.keys(captured).length === 0) {
-    return { ...DEFAULT_APP_STORE_TRACKING };
-  }
-  return captured;
+  return captureTrackingFromLocation();
 }
 
 /** App download URL with the same UTMs the user arrived with. */
