@@ -34,10 +34,11 @@ const FEATURES = [
 export default function GradRightBridge({ userName }: { userName?: string }) {
   const appStoreUrl = useAppStoreUrl();
 
-  function handleDownloadClick() {
+  function handleAppLinkClick(button: string) {
     trackAppDownloadClick({
       href: appStoreUrl,
       location: "bridge",
+      button,
       name: userName,
     });
   }
@@ -74,7 +75,17 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
 
           <div className="bridge-features" role="list">
             {FEATURES.map((feature) => (
-              <div key={feature.id} className="bridge-feature" role="listitem">
+              <a
+                key={feature.id}
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bridge-feature"
+                role="listitem"
+                data-track="bad_advice_download_click"
+                aria-label={`${feature.label}: ${feature.detail}`}
+                onClick={() => handleAppLinkClick(feature.label)}
+              >
                 <span
                   className="material-symbols-outlined bridge-feature-icon"
                   aria-hidden="true"
@@ -83,7 +94,7 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
                 </span>
                 <span className="bridge-feature-label">{feature.label}</span>
                 <span className="bridge-feature-detail">{feature.detail}</span>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -102,7 +113,7 @@ export default function GradRightBridge({ userName }: { userName?: string }) {
               rel="noopener noreferrer"
               className="bridge-cta-btn"
               data-track="bad_advice_download_click"
-              onClick={handleDownloadClick}
+              onClick={() => handleAppLinkClick("Download the App now!")}
             >
               Download the App now!
             </a>
