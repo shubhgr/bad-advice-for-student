@@ -1,4 +1,4 @@
-import { resolveTrackingParams, type TrackingParams } from "@/lib/utm";
+import { getTrackingParams, type TrackingParams } from "@/lib/utm";
 
 export const DOWNLOAD_CLICK_EVENT = "bad_advice_download_click";
 
@@ -35,7 +35,16 @@ function sendDownloadClickToApi(payload: DownloadClickPayload): void {
     referrer: document.referrer,
   });
 
-  // fetch + keepalive is more reliable than sendBeacon for JSON on mobile Safari.
+  try {
+    if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+      const blob = new Blob([body], { type: "application/json" });
+      const sent = navigator.sendBeacon("/api/track/download-click", blob);
+      if (sent) return;
+    }
+  } catch {
+    // fall through to fetch
+  }
+
   try {
     void fetch("/api/track/download-click", {
       method: "POST",
@@ -43,16 +52,6 @@ function sendDownloadClickToApi(payload: DownloadClickPayload): void {
       body,
       keepalive: true,
     });
-    return;
-  } catch {
-    // fall through to sendBeacon
-  }
-
-  try {
-    if (typeof navigator !== "undefined" && navigator.sendBeacon) {
-      const blob = new Blob([body], { type: "text/plain;charset=UTF-8" });
-      navigator.sendBeacon("/api/track/download-click", blob);
-    }
   } catch {
     // never block navigation
   }
@@ -70,7 +69,7 @@ export function trackAppDownloadClick(options: {
 }): void {
   if (typeof window === "undefined") return;
 
-  const tracking = resolveTrackingParams(options.href);
+  const tracking = getTrackingParams();
   const payload: DownloadClickPayload = {
     event: DOWNLOAD_CLICK_EVENT,
     location: options.location ?? "bridge",
