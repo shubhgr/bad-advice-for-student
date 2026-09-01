@@ -3,6 +3,7 @@ import {
   appendDownloadClickRow,
   isGoogleSheetsConfigured,
 } from "@/lib/google-sheets";
+import { parseTrackingFromUrl } from "@/lib/utm";
 
 export const dynamic = "force-dynamic";
 
@@ -36,11 +37,13 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const utmSource = body.utm_source?.trim() || "";
-    const utmMedium = body.utm_medium?.trim() || "";
-    const utmCampaign = body.utm_campaign?.trim() || "";
-    const utmTerm = body.utm_term?.trim() || "";
-    const utmContent = body.utm_content?.trim() || "";
+    const href = body.href?.trim() || "";
+    const fromHref = parseTrackingFromUrl(href);
+    const utmSource = body.utm_source?.trim() || fromHref.utm_source || "";
+    const utmMedium = body.utm_medium?.trim() || fromHref.utm_medium || "";
+    const utmCampaign = body.utm_campaign?.trim() || fromHref.utm_campaign || "";
+    const utmTerm = body.utm_term?.trim() || fromHref.utm_term || "";
+    const utmContent = body.utm_content?.trim() || fromHref.utm_content || "";
     const hasAnyUtm = Boolean(
       utmSource || utmMedium || utmCampaign || utmTerm || utmContent,
     );
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
       utmCampaign: hasAnyUtm ? utmCampaign : noUtmLabel,
       utmTerm: hasAnyUtm ? utmTerm : "",
       utmContent: hasAnyUtm ? utmContent : "",
-      downloadUrl: body.href?.trim() || "",
+      downloadUrl: href,
       userAgent: request.headers.get("user-agent") || "",
       referrer: body.referrer?.trim() || request.headers.get("referer") || "",
     });
